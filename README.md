@@ -73,13 +73,15 @@ Next, navigate to the folder [Assets/Postman Script](https://github.com/AhmedAlm
 
 In Postman, import the collection and fill in the global variables with the proper values. To do that, click on the collection's name and navigate to the "Variables" tab. Modify the values in the "CURRENT VALUE" column according to the following table: 
 
+(Note that some resources have not been configured yet and will be deployed later. At this point, all variables should be filled in with the exception of variables from CUSTOM_SKILL_URL_ONE to LOOKUP_TABLE_URL_TWO which will be completed in Step 3.) 
+
 | CURRENT VALUE | Value to replace |
 | ------ | ------ |
 | <SEARCH_SERVICE_NAME> | Name of Search Service |
 | <SEARCH_SERVICE_ADMIN_KEY> | Admin Key of Search Service |
 | <COGNATIVE_SERVICE_KEY> | Key of Cognitive Services |
 | <STORAGE_ACCOUNT_NAME> | Name of Storage Account |
-| <STORAGE_ACCOUNT_CONTAINER_NAME> | Name of Storage Container |
+| <STORAGE_ACCOUNT_CONTAINER_NAME> | Name of Storage Container, create container in storage account |
 | <STORAGE_CONTAINER_FOLDER_NAME> | Name of Storage Folder, only if used, otherwise replace with empty space |
 | <STORAGE_ACCOUNT_CONNECTION_STRING> | Connection String of Storage Account  |
 | <CUSTOM_SKILL_URL_ONE> | Azure Function URL of Text Extraction Skill |
@@ -102,7 +104,9 @@ In VS Code, create an HTTP Trigger Azure Function in Python, and replace the cod
 
 This process should be done twice to create two functions, one for Text Extraction and the other for Years of Experience. 
 
-In Text Extraction, make sure to add the values for the Cognitive Services Key and Endpoint in the script, and add "requests" in the requirments file.
+In Text Extraction, make sure to *add the values for the Cognitive Services Key and Endpoint in the script*.
+
+In the requirements.txt file, *add "requests"*.
 
 To deploy the function, you can follow the instructions provided in here: [Develop Azure Functions by using Visual Studio Code](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=python).
 
