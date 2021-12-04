@@ -64,10 +64,10 @@ Using the provided ARM template, create all the required Azure resources by clic
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fthomasgauvin%2Fcv-knowledge-engine-accelerator%2Fmain%2FAssets%2FARM%2520Template%2Ftemplate.json)
 
-### Step 1: Setup the Environemnt 
-After deploying the resources successfully, navigate to the newly created Storage Account in Azure, and upload the sample documents in a new blob container.
+Ensure resources are properly deployed before continuing.
 
-The sample documents can be found in [Assets/Sample Documents](https://github.com/AhmedAlmu/cv-knowledge-engine-accelerator/tree/main/Assets/Sample%20Documents) folder. 
+### Step 1: Setup the Environemnt 
+Navigate to the newly created Storage Account in Azure, and upload the sample documents in a new blob container. The sample documents can be found in [Assets/Sample Documents](https://github.com/AhmedAlmu/cv-knowledge-engine-accelerator/tree/main/Assets/Sample%20Documents) folder. 
 
 Next, navigate to the folder [Assets/Postman Script](https://github.com/AhmedAlmu/cv-knowledge-engine-accelerator/tree/main/Assets/Postman%20Script) to find the Postman collection that will be used to create the Search Service elements. 
 
