@@ -86,15 +86,6 @@
             "metadata": {
                 "description": "Location of deployed resources."
             }
-        },
-        "linuxFxVersion": {
-            "defaultValue": "Python|3.9",
-            "allowedValues": [
-                "Python|3.9",
-                "Python|3.8",
-                "Python|3.7"
-            ],
-            "type": "String"
         }
     },
     "variables": {
@@ -104,8 +95,7 @@
         "searchServiceName": "[concat(parameters('resourcePrefix'), '-search-service')]",
         "cognitiveServicesAccountName": "[concat(parameters('resourcePrefix'), '-cognitive-services')]",
         "functionAppName": "[concat(parameters('resourcePrefix'), '-function-app')]",
-        "storageAccountId": "[concat(parameters('resourcePrefix'))]",
-        "linuxFxVersion": "[concat(parameters('linuxFxVersion'))]"
+        "storageAccountId": "[concat(parameters('resourcePrefix'))]"
     },
     "resources": [
         {
@@ -118,26 +108,6 @@
             },
             "properties": {
                 "name": "[variables('hostingPlanName')]"
-            }
-        },
-        {
-            "apiVersion": "2018-11-01",
-            "name": "[concat(variables('hostingPlanName'),'-function')]",
-            "type": "Microsoft.Web/serverfarms",
-            "location": "[parameters('location')]",
-            "kind": "linux",
-            "tags": {},
-            "dependsOn": [],
-            "properties": {
-                "name": "[concat(variables('hostingPlanName'), '-function')]",
-                "workerSize": "0",
-                "workerSizeId": "0",
-                "numberOfWorkers": "1",
-                "reserved": true
-            },
-            "sku": {
-                "Tier": "Dynamic",
-                "Name": "Y1"
             }
         },
         {
@@ -184,39 +154,40 @@
             "properties": {}
         },
         {
-            "apiVersion": "2018-11-01",
-            "name": "[concat(variables('websiteName'), '-function')]",
             "type": "Microsoft.Web/sites",
-            "kind": "functionapp,linux",
+            "apiVersion": "2016-03-01",
+            "name": "[concat(variables('functionAppName'), '-1')]",
             "location": "[parameters('location')]",
-            "tags": {},
             "dependsOn": [
-                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'),'-function')]",
-                "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
             ],
+            "kind": "functionapp,linux",
             "properties": {
-                "name": "[concat(variables('websiteName'), '-function')]",
-                "siteConfig": {
-                    "appSettings": [
-                        {
-                            "name": "FUNCTIONS_EXTENSION_VERSION",
-                            "value": "~4"
-                        },
-                        {
-                            "name": "FUNCTIONS_WORKER_RUNTIME",
-                            "value": "python"
-                        },
-                        {
-                            "name": "AzureWebJobsStorage",
-                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
-                        }
-                    ],
-                    "use32BitWorkerProcess": false,
-                    "linuxFxVersion": "[variables('linuxFxVersion')]"
-                },
-                
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(variables('hostingPlanName'),'-function'))]",
-                "clientAffinityEnabled": false
+              "siteConfig": {
+                "appSettings": [
+                  {
+                    "name": "AzureWebJobsStorage",
+                    "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1, ';')]"
+                  },
+                  {
+                    "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                    "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1, ';')]"
+                  },
+                  {
+                    "name": "WEBSITE_CONTENTSHARE",
+                    "value": "[toLower(concat(variables('functionAppName'), '-1'))]"
+                  },
+                  {
+                    "name": "FUNCTIONS_WORKER_RUNTIME",
+                    "value": "python"
+                  },
+                  {
+                    "name": "FUNCTIONS_EXTENSION_VERSION",
+                    "value": "~2"
+                  }
+                ]
+              },
+              "reserved":  true
             }
         },
         {
