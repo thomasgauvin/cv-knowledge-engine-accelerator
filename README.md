@@ -104,9 +104,9 @@ In VS Code, create an HTTP Trigger Azure Function in Python, and replace the cod
 
 This process should be done twice to create two functions, one for Text Extraction and the other for Years of Experience. 
 
-In Text Extraction, make sure to *add the values for the Cognitive Services Key and Endpoint in the script*.
+In Text Extraction, make sure to **add the values for the Cognitive Services Key and Endpoint in the script**.
 
-In the requirements.txt file, *add "requests"*.
+In the requirements.txt file, **add "requests"**.
 
 To deploy the function, you can follow the instructions provided in here: [Develop Azure Functions by using Visual Studio Code](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=python).
 
